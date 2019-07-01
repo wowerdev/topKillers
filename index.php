@@ -1,11 +1,18 @@
 <?php
 
-
-$host = "127.0.0.1"; // Адрес хоста (обычно localhost )
+// Настройки поделючения к БД
+$host = "127.0.0.1"; // Адрес хоста (обычно localhost)
 $login = "trinity"; // Логин от БД
 $pass = "trinity"; // Пароль от БД
 $name = "characters"; // Имя БД персонажей (обычно characters)
 
+// Настройки функционала
+
+$count_killers = 10; // Какое количество игроков выводить в "Топ убийц". По умолчанию 10
+$count_honor = 10; // Какое количество игроков выводить в "Топ хонора". По умолчанию 10
+$count_2х2 = 10; // Какое количество игроков выводить в "Топ 2х2". По умолчанию 10
+$count_3х3 = 10; // Какое количество игроков выводить в "Топ 3х3". По умолчанию 10
+$count_5х5 = 10; // Какое количество игроков выводить в "Топ 5х5". По умолчанию 10
 
 
 ?>
@@ -28,7 +35,7 @@ $name = "characters"; // Имя БД персонажей (обычно characte
         <nav class="legend__nav">
           <ul class="legend__menu">
             <li class="legend__menu-item">
-              <button data-type="kill" class="btn legend__menu-btn">Топ убийств</button>
+              <button data-type="kill" class="btn legend__menu-btn">Топ убийц</button>
             </li>
             <li class="legend__menu-item">
               <button data-type="honor" class="btn legend__menu-btn">Топ хонора</button>
@@ -54,11 +61,12 @@ $name = "characters"; // Имя БД персонажей (обычно characte
         <?php
 
         $connect = new mysqli($host, $login, $pass, $name);
+        $connect->query("SET NAMES `utf8` COLLATE `utf8_general_ci`");
 
         if ($connect->connect_error) {
           echo "Ошибка подключения к базе данных";
         } else {
-          $sql = "SELECT `name`, `race`, `totalKills` FROM `characters` ORDER BY `totalKills` DESC LIMIT 10";
+          $sql = "SELECT `name`, `race`, `totalKills` FROM `characters` ORDER BY `totalKills` DESC LIMIT $count_killers";
           $res = $connect->query($sql);
           $i = 0; ?>
           <ul class="legend__list active" data-type="kill">
@@ -88,7 +96,7 @@ $name = "characters"; // Имя БД персонажей (обычно characte
           </ul>
 
           <?php
-          $sql = "SELECT `name`, `race`, `totalHonorPoints` FROM `characters` ORDER BY `totalHonorPoints` DESC LIMIT 10";
+          $sql = "SELECT `name`, `race`, `totalHonorPoints` FROM `characters` ORDER BY `totalHonorPoints` DESC LIMIT $count_honor";
           $res = $connect->query($sql);
           $i = 0; ?>
 
@@ -119,7 +127,7 @@ $name = "characters"; // Имя БД персонажей (обычно characte
           </ul>
 
           <?php
-          $sql = "SELECT `name`, `rating` FROM `arena_team` WHERE `type` = 2  ORDER BY `rating` DESC LIMIT 10";
+          $sql = "SELECT `name`, `rating` FROM `arena_team` WHERE `type` = 2  ORDER BY `rating` DESC LIMIT $count_2х2";
           $res = $connect->query($sql);
           $i = 0; ?>
 
@@ -143,7 +151,7 @@ $name = "characters"; // Имя БД персонажей (обычно characte
           </ul>
 
           <?php
-          $sql = "SELECT `name`, `rating` FROM `arena_team` WHERE `type` = 3 ORDER BY `rating` DESC LIMIT 10";
+          $sql = "SELECT `name`, `rating` FROM `arena_team` WHERE `type` = 3 ORDER BY `rating` DESC LIMIT $count_3х3";
           $res = $connect->query($sql);
           $i = 0; ?>
 
@@ -167,7 +175,7 @@ $name = "characters"; // Имя БД персонажей (обычно characte
           </ul>
 
           <?php
-          $sql = "SELECT `name`, `rating` FROM `arena_team` WHERE `type` = 5 ORDER BY `rating` DESC LIMIT 10";
+          $sql = "SELECT `name`, `rating` FROM `arena_team` WHERE `type` = 5 ORDER BY `rating` DESC LIMIT $count_5х5";
           $res = $connect->query($sql);
           $i = 0; ?>
 
