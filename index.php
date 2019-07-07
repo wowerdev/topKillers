@@ -195,7 +195,6 @@ $count_5х5 = 10; // Какое количество игроков выводи
               </li>
 
             <?php  }  ?>
-            <a href="https://it-portfolio.ru/" style="display: none;">Разработка сайтов</a>
           </ul>
 
         <?php } ?>
